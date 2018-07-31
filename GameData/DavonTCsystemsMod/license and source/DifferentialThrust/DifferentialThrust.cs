@@ -265,19 +265,19 @@ namespace DifferentialThrustMod
                     }
 
                     //check if SRB
-                    if (pm is ModuleEngines)
+                    if (pm is ModuleEngines || pm is ModuleEnginesFX)
                     {
                         ModuleEngines cModuleEngines;
-                        cModuleEngines = p.Modules.OfType<ModuleEngines>().FirstOrDefault();
+                        cModuleEngines = (ModuleEngines)pm;
                         if (cModuleEngines.throttleLocked == false) { couldadd = true; };
                     }
-                    //check if SRB
-                    if (pm is ModuleEnginesFX)
-                    {
-                        ModuleEnginesFX cModuleEnginesFX;
-                        cModuleEnginesFX = p.Modules.OfType<ModuleEnginesFX>().FirstOrDefault();
-                        if (cModuleEnginesFX.throttleLocked == false) { couldadd = true; };
-                    }
+                    ////check if SRB
+                    //if (pm is ModuleEnginesFX)
+                    //{
+                    //    cModuleEngines = p.Modules.OfType<ModuleEnginesFX>().FirstOrDefault();
+                    //    if (cModuleEngines.throttleLocked == false) { couldadd = true; };
+                    //}
+                    
                 }
 
                 if (dontadd == false && couldadd == true)
@@ -334,21 +334,21 @@ namespace DifferentialThrustMod
                 rDifferentialThrustEngineModule = p.Modules.OfType<DifferentialThrustEngineModule>().FirstOrDefault();
 
                 //reset engines
-                if (rDifferentialThrustEngineModule.enginemoduletype == 0)
-                {
+                //if (rDifferentialThrustEngineModule.enginemoduletype == 0)
+                //{
                     //ModuleEngines rModuleEngines;
                     //rModuleEngines = p.Modules.OfType<ModuleEngines>().FirstOrDefault();
 
-                    rDifferentialThrustEngineModule.PartmoduleModuleEngines.useEngineResponseTime = rDifferentialThrustEngineModule.StoredOuseEngineResponseTime;
-                    rDifferentialThrustEngineModule.PartmoduleModuleEngines.engineAccelerationSpeed = rDifferentialThrustEngineModule.StoredOengineAccelerationSpeed;
-                    rDifferentialThrustEngineModule.PartmoduleModuleEngines.engineDecelerationSpeed = rDifferentialThrustEngineModule.StoredOengineDecelerationSpeed;
-                }
-                else
-                {
-                    rDifferentialThrustEngineModule.PartmoduleModuleEnginesFX.useEngineResponseTime = rDifferentialThrustEngineModule.StoredOuseEngineResponseTime;
-                    rDifferentialThrustEngineModule.PartmoduleModuleEnginesFX.engineAccelerationSpeed = rDifferentialThrustEngineModule.StoredOengineAccelerationSpeed;
-                    rDifferentialThrustEngineModule.PartmoduleModuleEnginesFX.engineDecelerationSpeed = rDifferentialThrustEngineModule.StoredOengineDecelerationSpeed;
-                }
+                rDifferentialThrustEngineModule.PartmoduleModuleEngines.useEngineResponseTime = rDifferentialThrustEngineModule.StoredOuseEngineResponseTime;
+                rDifferentialThrustEngineModule.PartmoduleModuleEngines.engineAccelerationSpeed = rDifferentialThrustEngineModule.StoredOengineAccelerationSpeed;
+                rDifferentialThrustEngineModule.PartmoduleModuleEngines.engineDecelerationSpeed = rDifferentialThrustEngineModule.StoredOengineDecelerationSpeed;
+                //}
+                //else
+                //{
+                //    rDifferentialThrustEngineModule.PartmoduleModuleEnginesFX.useEngineResponseTime = rDifferentialThrustEngineModule.StoredOuseEngineResponseTime;
+                //    rDifferentialThrustEngineModule.PartmoduleModuleEnginesFX.engineAccelerationSpeed = rDifferentialThrustEngineModule.StoredOengineAccelerationSpeed;
+                //    rDifferentialThrustEngineModule.PartmoduleModuleEnginesFX.engineDecelerationSpeed = rDifferentialThrustEngineModule.StoredOengineDecelerationSpeed;
+                //}
 
                 //remove temp module from every engine
                 p.RemoveModule(rDifferentialThrustEngineModule);
@@ -502,14 +502,14 @@ namespace DifferentialThrustMod
                         dtm.throttleFloatSelect = 0f;
                         dtm.CenterThrust = false;
 
-                        if (dtm.enginemoduletype == 0)
-                        {
-                            dtm.PartmoduleModuleEngines.thrustPercentage = 100f;
-                        }
-                        else if (dtm.enginemoduletype == 1)
-                        {
-                            dtm.PartmoduleModuleEnginesFX.thrustPercentage = 100f;
-                        }
+                        //if (dtm.enginemoduletype == 0)
+                        //{
+                        dtm.PartmoduleModuleEngines.thrustPercentage = 100f;
+                        //}
+                        //else if (dtm.enginemoduletype == 1)
+                        //{
+                        //    dtm.PartmoduleModuleEnginesFX.thrustPercentage = 100f;
+                        //}
                     }
                 }
                 selOnOffGridInt = 0;
@@ -1401,17 +1401,17 @@ namespace DifferentialThrustMod
                         simulatedEngine engine = new simulatedEngine();
                         engine.enginepart = p;
 
-                        if (pm is ModuleEngines)
+                        if (pm is ModuleEngines || pm is ModuleEnginesFX)
                         {
                             engine.enginemoduletype = 0;
                             engine.ModEng = (ModuleEngines)pm;
 
                         }
-                        else if (pm is ModuleEnginesFX)
-                        {
-                            engine.enginemoduletype = 1;
-                            engine.ModEngFX = (ModuleEnginesFX)pm;
-                        }
+                        //else if (pm is ModuleEnginesFX)
+                        //{
+                        //    engine.enginemoduletype = 1;
+                        //    engine.ModEngFX = (ModuleEnginesFX)pm;
+                        //}
 
                         foreach (PartModule pmt in p.Modules)
                         {
@@ -1505,7 +1505,7 @@ namespace DifferentialThrustMod
             bool skip;
             float distance = 0f;
             float input = 0f;
-            float simulationfactor;
+            float simulatedThrust;
             float SumMoments = 0f;
             float SumThrusts = 0f;
 
@@ -1531,28 +1531,36 @@ namespace DifferentialThrustMod
 
                     if (simE.DifMod.CenterThrust)
                     {
-                        simulationfactor = (simE.DifMod.aim / simE.thrustPercentage);
-                        //don't divide by zero
-                        if (simE.thrustPercentage <= 0)
+                        if (simE.engineactive)
                         {
-                            simulationfactor = 1;
-                            skip = true;
+                            if (simE.thrustPercentage > 0)
+                            {
+                                simulatedThrust = simE.minThrust + ((simE.measuredThrust - simE.minThrust) * (simE.DifMod.aim / simE.thrustPercentage));
+                            }
+                            else
+                            {
+                                simulatedThrust = simE.minThrust + ((simE.maxThrust - simE.minThrust) * simE.DifMod.throttleSvalue * (simE.DifMod.aim / 100));
+                            }
+                        }
+                        else
+                        {
+                            simulatedThrust = 0;
                         }
                     }
                     else
                     {
-                        simulationfactor = 1;
+                        simulatedThrust = simE.measuredThrust;
                     }
                 }
                 else
                 {
-                    simulationfactor = 1;
+                    simulatedThrust = simE.measuredThrust;
                 }
 
                 if (skip == false)
                 {
-                    SumMoments = SumMoments + ((distance + 1000) * simE.measuredThrust * simulationfactor);
-                    SumThrusts = SumThrusts + (simE.measuredThrust * simulationfactor);
+                    SumMoments = SumMoments + ((distance + 1000) * simulatedThrust);
+                    SumThrusts = SumThrusts + simulatedThrust;
                 }
             }
 
