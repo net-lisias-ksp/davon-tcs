@@ -1,5 +1,9 @@
 # davon-tcs :: Change Log
 
+* 2018-0402: Version 0.8.7 for Kerbal Space Program 1.4.1
+    - compiled for 1.4
+    - added support for engines which have a minimum thrust which was ingnored as soon as this mod was enabled.
+    - making these also some error in center of thrust calculations where found when the engine adjustment hovers around zero percent. This has been improved.
 * 2018-0101: Version 0.8.6 for Kerbal Space Program 1.3.1
     - compiled for 1.3.1
 * 2017-0614: Version 0.8.5 for Kerbal Space Program 1.3.0
