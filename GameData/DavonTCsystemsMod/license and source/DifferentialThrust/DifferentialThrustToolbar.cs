@@ -102,7 +102,7 @@ namespace DifferentialThrustMod
             {
                 foreach (PartModule pm in p.Modules)
                 {
-                    if (pm.ClassName == "DifferentialThrust")
+                    if (pm is DifferentialThrust)
                     {
                         return (true);
                     }
@@ -117,7 +117,7 @@ namespace DifferentialThrustMod
             {
                 foreach (PartModule pm in p.Modules)
                 {
-                    if (pm.ClassName == "DifferentialThrust")
+                    if (pm is DifferentialThrust)
                     {
                         DifferentialThrust aDifferentialThrust;
                         aDifferentialThrust = p.Modules.OfType<DifferentialThrust>().FirstOrDefault();
@@ -134,7 +134,7 @@ namespace DifferentialThrustMod
             {
                 foreach (PartModule pm in p.Modules)
                 {
-                    if (pm.ClassName == "DifferentialThrust")
+                    if (pm is DifferentialThrust)
                     {
                         DifferentialThrust aDifferentialThrust;
                         aDifferentialThrust = p.Modules.OfType<DifferentialThrust>().FirstOrDefault();
@@ -151,7 +151,7 @@ namespace DifferentialThrustMod
             {
                 foreach (PartModule pm in p.Modules)
                 {
-                    if (pm.ClassName == "DifferentialThrust")
+                    if (pm is DifferentialThrust)
                     {
                         DifferentialThrust aDifferentialThrust;
                         aDifferentialThrust = p.Modules.OfType<DifferentialThrust>().FirstOrDefault();

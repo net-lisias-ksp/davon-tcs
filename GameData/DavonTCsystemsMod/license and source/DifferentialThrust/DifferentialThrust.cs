@@ -223,7 +223,7 @@ namespace DifferentialThrustMod
             {
                 foreach (PartModule pm in p.Modules)
                 {
-                    if (pm.ClassName == "DifferentialThrust" && p.flightID != part.flightID)
+                    if (pm is DifferentialThrust && p.flightID != part.flightID)
                     {
                         DifferentialThrust aDifferentialThrust;
                         aDifferentialThrust = p.Modules.OfType<DifferentialThrust>().FirstOrDefault();
@@ -241,7 +241,7 @@ namespace DifferentialThrustMod
                 bool added = false;
                 foreach (PartModule pm in p.Modules)
                 {
-                    if (added == false && (pm.ClassName == "ModuleEngines" || pm.ClassName == "MultiModeEngine" || pm.ClassName == "ModuleEnginesFX"))
+                    if (added == false && (pm is ModuleEngines || pm is MultiModeEngine || pm is ModuleEnginesFX))
                     {
                         EngineList.Add(p);
                         added = true;
@@ -258,21 +258,21 @@ namespace DifferentialThrustMod
                 foreach (PartModule pm in p.Modules)
                 {
                     //check if already added
-                    if (pm.ClassName == "DifferentialThrustEngineModule")
+                    if (pm is DifferentialThrustEngineModule)
                     {
                         dontadd = true;
                         TCEngineList.Add((DifferentialThrustEngineModule)pm);
                     }
 
                     //check if SRB
-                    if (pm.ClassName == "ModuleEngines")
+                    if (pm is ModuleEngines)
                     {
                         ModuleEngines cModuleEngines;
                         cModuleEngines = p.Modules.OfType<ModuleEngines>().FirstOrDefault();
                         if (cModuleEngines.throttleLocked == false) { couldadd = true; };
                     }
                     //check if SRB
-                    if (pm.ClassName == "ModuleEnginesFX")
+                    if (pm is ModuleEnginesFX)
                     {
                         ModuleEnginesFX cModuleEnginesFX;
                         cModuleEnginesFX = p.Modules.OfType<ModuleEnginesFX>().FirstOrDefault();
@@ -282,12 +282,12 @@ namespace DifferentialThrustMod
 
                 if (dontadd == false && couldadd == true)
                 {
-                    p.AddModule("DifferentialThrustEngineModule");
+                    p.AddModule(typeof(DifferentialThrustEngineModule).Name);
                     //and add to list
                     foreach (PartModule pmt in p.Modules)
                     {
                         //check if already added
-                        if (pmt.ClassName == "DifferentialThrustEngineModule")
+                        if (pmt is DifferentialThrustEngineModule)
                         {
                             TCEngineList.Add((DifferentialThrustEngineModule)pmt);
                         }
@@ -320,7 +320,7 @@ namespace DifferentialThrustMod
             {
                 foreach (PartModule pm in p.Modules)
                 {
-                    if (pm.ClassName == "DifferentialThrustEngineModule")
+                    if (pm is DifferentialThrustEngineModule)
                     {
                         ModDifList.Add(p);
                     }
@@ -437,7 +437,7 @@ namespace DifferentialThrustMod
             {
                 foreach (PartModule pm in p.Modules)
                 {
-                    if (pm.ClassName == "ModuleCommand")
+                    if (pm is ModuleCommand)
                     {
                         present = true;
                     }
@@ -1396,18 +1396,18 @@ namespace DifferentialThrustMod
                 foreach (PartModule pm in p.Modules)
                 {
 
-                    if (partadded == false && (pm.ClassName == "ModuleEngines" || pm.ClassName == "ModuleEnginesFX"))
+                    if (partadded == false && (pm is ModuleEngines || pm is ModuleEnginesFX))
                     {
                         simulatedEngine engine = new simulatedEngine();
                         engine.enginepart = p;
 
-                        if (pm.ClassName == "ModuleEngines")
+                        if (pm is ModuleEngines)
                         {
                             engine.enginemoduletype = 0;
                             engine.ModEng = (ModuleEngines)pm;
 
                         }
-                        else if (pm.ClassName == "ModuleEnginesFX")
+                        else if (pm is ModuleEnginesFX)
                         {
                             engine.enginemoduletype = 1;
                             engine.ModEngFX = (ModuleEnginesFX)pm;
@@ -1415,7 +1415,7 @@ namespace DifferentialThrustMod
 
                         foreach (PartModule pmt in p.Modules)
                         {
-                            if (pmt.ClassName == "DifferentialThrustEngineModule")
+                            if (pmt is DifferentialThrustEngineModule)
                             {
                                 engine.hasEngineModule = true;
                                 engine.DifMod = (DifferentialThrustEngineModule)pmt;
