@@ -1377,7 +1377,7 @@ namespace DifferentialThrustMod
         //run each physics cycle
         public void centerThrustInSim()
         {
-            CoM = vessel.ReferenceTransform.InverseTransformPoint(vessel.CoM + vessel.rb_velocity * Time.deltaTime + 0.5 * vessel.acceleration * Time.deltaTime * Time.deltaTime);
+            CoM = vessel.ReferenceTransform.InverseTransformPoint(vessel.CoM);
 
             updateEngineList();
 
