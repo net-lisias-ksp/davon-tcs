@@ -1,5 +1,7 @@
 # davon-tcs :: Change Log
 
+* 2018-0101: Version 0.8.6 for Kerbal Space Program 1.3.1
+    - compiled for 1.3.1
 * 2017-0614: Version 0.8.5 for Kerbal Space Program 1.3.0
     - previous version did not contain correct version for 1.3, my apologies
 * 2016-0611: Version 0.8.4 for Kerbal Space Program 1.2.2
