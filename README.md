@@ -1,11 +1,10 @@
-# davon-tcs Unofficial
+# davon-tcs (History)
 
 Davon Throttle Control systems. Unofficial repository by Lisias.
 
 
 ## In a Hurry
 
-* [History](https://github.com/net-lisias-kspu/davon-tcs/tree/History)
 * [Releases](https://github.com/net-lisias-kspu/davon-tcs/tree/Archive)
 * [Change Log](./CHANGE_LOG.md)
 
